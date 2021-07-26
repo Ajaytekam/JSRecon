@@ -4,6 +4,12 @@
 
 **Tools used :** subjs, gau, hakrawler, linkfinder, secretfinder, httpx
 
+**Install Requirements :**  
+
+```  
+pip3 install -r requirements.txt
+```  
+
 **Usage :**  
 
 ```  
@@ -19,3 +25,11 @@ optional arguments:
   -d, --download     Download javascript Files on local machine
 ```  
 
+
+**Telegram Bot :** Needs to be added `/root/nofification.ini` file on server. 
+
+```
+[telegram]
+apiToken = snldasdsljdffsdfvsd.....
+chatId = 1234567
+```
