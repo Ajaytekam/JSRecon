@@ -4,7 +4,7 @@ import os
 
 def NotifyTelegramBot(textMessage):
     ConfigPath = "/root/notificationConfig.ini"
-    print("[+] Sending notification to telegram bot")
+    #print("[+] Sending notification to telegram bot")
     config = configparser.RawConfigParser()
     if os.path.isfile(ConfigPath):
         config.read(ConfigPath)
@@ -14,7 +14,7 @@ def NotifyTelegramBot(textMessage):
             send_text = 'https://api.telegram.org/bot'+apiToken+'/sendMessage?chat_id='+chatId+'&parse_mode=Markdown&text='+textMessage
             response = requests.post(send_text)
             if response.status_code == 200:
-                print("\t[!] Message Send successfully")
+                #print("\t[!] Message Send successfully")
         else:
             print("[-] Error : no credentials are setted for Telegram bot (API token and ChatId)")
     else:

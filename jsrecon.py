@@ -28,7 +28,14 @@ def ValideteDomain(domain):
         return True
     else:
         return False
-    
+
+def Banner():
+    print("############################################")
+    print("# "+co.BOLD+co.colors.GREEN+"JSRecon"+co.END+co.BOLD+" : Javascript Reconnaissance Tool"+co.END)
+    print("# "+co.BOLD+"Developed by : "+co.colors.RED+"securebitlabs.com"+co.END)
+    print("# version : 0.1")
+    print("############################################\n")
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="Domain name to perform reconnaissance")
@@ -37,11 +44,7 @@ def main():
     args = parser.parse_args()
     # Check argument
     if args.url is None:
-        print("############################################")
-        print("# "+co.BOLD+co.colors.GREEN+"JSRecon"+co.END+co.BOLD+" : Javascript Reconnaissance Tool"+co.END)
-        print("# "+co.BOLD+"Developed by : "+co.colors.RED+"securebitlabs.com"+co.END)
-        print("# version : 0.1")
-        print("############################################\n")
+        Banner()
         parser.print_help()
         sys.exit()
     ## GLOBAL Vars
@@ -68,7 +71,8 @@ def main():
             print(co.bullets.ERROR, co.colors.BRED+" Error : Could not resolve the Http protocol.!!"+co.END)
             sys.exit(1)
     # Sending telegram message
-    txtmessage = "JSRecon staretd for domain : {}".format(Domain)
+    Banner()
+    txtmessage = "JSRecon staretd for domain : {}".format(tDomain)
     NotifyTelegramBot(txtmessage)
     # Create output dir 
     if args.out is not None:
@@ -115,7 +119,7 @@ def main():
     JSfile = open("js_200", "r").read()
     NoOfJS = JSfile.count("\n") - 1
     if NoOfJS > 0:
-        print(co.bullets.INFO+"{} Javascript files found".format(NoOfJS)+co.END)
+        print(co.bullets.INFO+co.colors.CYAN+" {} Javascript files found".format(NoOfJS)+co.END)
     # Delete temp files 
     if os.path.isfile("tempgau"):
         os.remove("tempgau")
@@ -138,17 +142,17 @@ def main():
         os.chdir("..")
     ################## 
     ## Get JS Endpoints  
-    COMMAND = 'while read -r jsurl; do echo "[ + ] URL: $jsurl" >> linkfinderResult.txt;linkfinder -d -i $jsurl -o cli >> linkfinderResult.txt; printf "\n\n" >> linkfinderResult.txt; done < js_200'
+    COMMAND = 'while read -r jsurl; do echo "[ + ] URL: $jsurl" >> linkfinderResult.txt;python3 /root/tools/LinkFinder/linkfinder.py -d -i $jsurl -o cli >> linkfinderResult.txt; printf "\n\n" >> linkfinderResult.txt; done < js_200'
     print(co.bullets.CProcess, co.colors.GREEN+"Scraping Endpoints with linkfinder "+co.END)
     executeCommand(COMMAND)
     ################## 
     ## Get Javascript Secrets   
-    COMMAND = 'while read -r jsurl; do secretfinder -i $jsurl -o cli >> secretfinderResults.txt;printf "\n\n" >> secretfinderResults.txt; done < js_200'
-    print("[+] Scraping Secrets with secretfinder ")
+    COMMAND = 'while read -r jsurl; do /root/tools/SecretFinder/SecretFinder.py -i $jsurl -o cli >> secretfinderResults.txt;printf "\n\n" >> secretfinderResults.txt; done < js_200'
+    print(co.bullets.CProcess, co.colors.GREEN+"Scraping Secrets with secretfinder ")
     executeCommand(COMMAND)
     print(co.bullets.OK, co.colors.CYAN+"Javascript Reconnaissance Completed.."+co.END)
     # Sending telegram message
-    txtmessage = "JSRecon Completed for Domain : {}".format(Domain)
+    txtmessage = "JSRecon Completed for Domain : {}".format(tDomain)
     NotifyTelegramBot(txtmessage)
     txtmessage = "results are stored on : {}".format(OPDir)
     NotifyTelegramBot(txtmessage)

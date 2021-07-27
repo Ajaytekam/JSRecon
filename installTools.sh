@@ -34,7 +34,7 @@ cd LinkFinder
 python3 setup.py install 
 chmod +x linkfinder.py
 # add to bashrc file 
-echo 'alias linkfinder="/root/tools/LinkFinder/linkfinder.py"' >> ~/.bashrc
+echo 'alias linkfinder="python3 /root/tools/LinkFinder/linkfinder.py"' >> ~/.bashrc
 echo -e "${YB}[*]${NC} linkfinder installed.."
 cd ..
 
