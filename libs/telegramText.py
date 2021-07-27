@@ -15,6 +15,7 @@ def NotifyTelegramBot(textMessage):
             response = requests.post(send_text)
             if response.status_code == 200:
                 #print("\t[!] Message Send successfully")
+                pass
         else:
             print("[-] Error : no credentials are setted for Telegram bot (API token and ChatId)")
     else:
