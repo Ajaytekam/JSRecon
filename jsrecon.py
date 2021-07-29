@@ -36,6 +36,10 @@ def Banner():
     print("# version : 0.1")
     print("############################################\n")
 
+def printInfo(Domain, OPDir):
+    print(co.bullets.INFO, co.colors.CYAN+"Target Domain : {}".format(Domain)+co.END)
+    print(co.bullets.INFO, co.colors.CYAN+"Result Dir    : {}\n".format(OPDir)+co.END)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="Domain name to perform reconnaissance")
@@ -48,6 +52,7 @@ def main():
         parser.print_help()
         sys.exit()
     ## GLOBAL Vars
+    Banner()
     tDomain = "" # raw domain name
     Domain = ""  # Domain name with protocol 
     OPDir = ""   # Output Directory 
@@ -71,27 +76,27 @@ def main():
             print(co.bullets.ERROR, co.colors.BRED+" Error : Could not resolve the Http protocol.!!"+co.END)
             sys.exit(1)
     # Sending telegram message
-    Banner()
     txtmessage = "JSRecon staretd for domain : {}".format(tDomain)
     NotifyTelegramBot(txtmessage)
     # Create output dir 
     if args.out is not None:
         OPDir = args.out
         if os.path.isdir(OPDir):
-            print(co.bullets.INFO+"{} already exists...".format(OPDir)+co.END)
-            print(co.bullets.INFO+"Adding time-stamp into the directory name as suffix"+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+"{} already exists...".format(OPDir)+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+"Adding time-stamp into the directory name as suffix"+co.END)
             Date = str(datetime.datetime.now())
             WORKDIR = re.sub("-|:|\.|\ ", "_", Date)
             OPDir += "_{}".format(WORKDIR)
     else:
         OPDir = "./jsrecon_{}".format(tDomain)
         if os.path.isdir(OPDir):
-            print(co.bullets.INFO+"{} already exists...".format(OPDir)+co.END)
-            print(co.bullets.INFO+"[+] Adding time-stamp into the directory name as suffix"+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+"{} already exists...".format(OPDir)+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+"Adding time-stamp into the directory name as suffix"+co.END)
             Date = str(datetime.datetime.now())
             WORKDIR = re.sub("-|:|\.|\ ", "_", Date)
             OPDir += "_{}".format(WORKDIR)
     os.mkdir(OPDir) 
+    printInfo(Domain, OPDir)
     #################
     ## Collecting Javascript urls
     os.chdir(OPDir)
@@ -148,7 +153,7 @@ def main():
     ################## 
     ## Get Javascript Secrets   
     COMMAND = 'while read -r jsurl; do /root/tools/SecretFinder/SecretFinder.py -i $jsurl -o cli >> secretfinderResults.txt;printf "\n\n" >> secretfinderResults.txt; done < js_200'
-    print(co.bullets.CProcess, co.colors.GREEN+"Scraping Secrets with secretfinder ")
+    print(co.bullets.CProcess, co.colors.GREEN+"Scraping Secrets with secretfinder "+co.END)
     executeCommand(COMMAND)
     print(co.bullets.OK, co.colors.CYAN+"Javascript Reconnaissance Completed.."+co.END)
     # Sending telegram message
