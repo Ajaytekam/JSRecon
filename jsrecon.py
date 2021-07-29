@@ -140,7 +140,7 @@ def main():
         os.chdir("JSFiles")
         try:
             subprocess.run('cat ../js_200 | parallel -j50 -q curl -O -J -sk', shell=True, text=True)
-            print("\t"+co.bullets.OK, co.colors.CYAN+"Files Downloaded Successfully.."+co.END) 
+            #print("\t"+co.bullets.OK, co.colors.CYAN+"Files Downloaded Successfully.."+co.END) 
         except subprocess.CalledProcessError as e:
             print(co.bullets.ERROR, co.colors.BRED+"There are some problem during downloading of JS Files."+co.END)
             print(e.output)
