@@ -82,16 +82,16 @@ def main():
     if args.out is not None:
         OPDir = args.out
         if os.path.isdir(OPDir):
-            print(co.bullets.INFO+co.colors.CYAN+"{} already exists...".format(OPDir)+co.END)
-            print(co.bullets.INFO+co.colors.CYAN+"Adding time-stamp into the directory name as suffix"+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+" {} already exists...".format(OPDir)+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+" Adding time-stamp into the directory name as suffix"+co.END)
             Date = str(datetime.datetime.now())
             WORKDIR = re.sub("-|:|\.|\ ", "_", Date)
             OPDir += "_{}".format(WORKDIR)
     else:
         OPDir = "./jsrecon_{}".format(tDomain)
         if os.path.isdir(OPDir):
-            print(co.bullets.INFO+co.colors.CYAN+"{} already exists...".format(OPDir)+co.END)
-            print(co.bullets.INFO+co.colors.CYAN+"Adding time-stamp into the directory name as suffix"+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+" {} already exists...".format(OPDir)+co.END)
+            print(co.bullets.INFO+co.colors.CYAN+" Adding time-stamp into the directory name as suffix"+co.END)
             Date = str(datetime.datetime.now())
             WORKDIR = re.sub("-|:|\.|\ ", "_", Date)
             OPDir += "_{}".format(WORKDIR)
