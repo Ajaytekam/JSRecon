@@ -43,7 +43,7 @@ def printInfo(Domain, OPDir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="Domain name to perform reconnaissance")
-    parser.add_argument("-o", "--out", help="Filename to perform operations on")
+    parser.add_argument("-o", "--out", help="Output directory name (default: jsrecon)")
     parser.add_argument("-d", "--download", help="Download javascript Files on local machine", action="store_true")
     args = parser.parse_args()
     # Check argument
@@ -67,12 +67,12 @@ def main():
         tempD = requests.head("https://"+tDomain, allow_redirects=True, timeout=8) 
         Domain = tempD.url
         Domain = re.sub(":443/$", "", Domain)
-    except:
+    except requests.ConnectionError:
         try:
             tempD = requests.head("http://"+tDomain, allow_redirects=True, timeout=8) 
             Domain = tempD.url
             Domain = re.sub(":80/$", "", Domain)
-        except:
+        except requests.ConnectionError:
             print(co.bullets.ERROR, co.colors.BRED+" Error : Could not resolve the Http protocol.!!"+co.END)
             sys.exit(1)
     # Sending telegram message
